@@ -33,10 +33,11 @@ const Footer = () => {
         align="start"
         px={{ base: 6, md: 16 }}
         py={{ base: 8, md: 12 }}
-        gap={{ base: 8, md: 12 }} 
+        gap={{ base: 8, md: 12 }}
+        overflowX="hidden"  // Prevent horizontal scrolling
       >
         {/* About Us Section */}
-        <Box flex="1">
+        <Box flex="1" mb={{ base: 8, md: 0 }}>
           <GridItem>
             <Box>
               <Text fontWeight="bold" fontSize="lg" mb={4}>
@@ -61,7 +62,7 @@ const Footer = () => {
         </Box>
 
         {/* Contact Us Section */}
-        <Box flex="1">
+        <Box flex="1" mb={{ base: 8, md: 0 }}>
           <GridItem>
             <Box>
               <Text fontWeight="bold" fontSize="lg" mb={4}>
@@ -109,7 +110,7 @@ const Footer = () => {
         </Box>
 
         {/* Stay Updated Section */}
-        <Box flex="1">
+        <Box flex="1" mb={{ base: 8, md: 0 }}>
           <Text fontWeight="bold" fontSize="lg" mb={4}>
             Stay Updated
           </Text>
@@ -131,7 +132,7 @@ const Footer = () => {
         </Box>
 
         {/* Enquiry Form */}
-        <Box flex="1">
+        <Box flex="1" mb={{ base: 8, md: 0 }}>
           <Text fontWeight="bold" fontSize="lg" mb={4}>
             Enquiry Form
           </Text>
@@ -144,7 +145,7 @@ const Footer = () => {
             mt={4}
             bg="#1a1d52"
             color="white"
-            _hover={{ bg: "#bf631d  " }}
+            _hover={{ bg: "#bf631d" }}
           >
             Enquire Now
           </Button>
@@ -164,7 +165,7 @@ const Footer = () => {
               </Link>{" "}
               |{" "}
               <Link
-              to={'/terms'}
+                to={'/terms'}
                 isExternal
               >
                 Terms and Conditions
@@ -191,5 +192,3 @@ const Footer = () => {
 };
 
 export default Footer;
-
-
