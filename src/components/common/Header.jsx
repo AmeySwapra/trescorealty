@@ -12,7 +12,6 @@ import {
   DrawerCloseButton,
   useDisclosure,
   VStack,
-  Link,
   Menu,
   MenuButton,
   MenuList,
@@ -24,6 +23,7 @@ import {
 import { HamburgerIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import logo from "../../assets/logo/trescorealty.jpg";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -37,23 +37,46 @@ const Header = () => {
   };
 
   const dropdownItems = {
-    Residential: ["Rent", "Sale"],
-    Commercial: ["Rent", "Sale"],
-    Industrial: ["Rent", "Sale"],
-    AboutUs: ["Blogs", "Real Estate Property Consultant"],
+    Residential: [
+      { label: "Rent", href: "/residential/rent" },
+      { label: "Sale", href: "/residential/sale" },
+    ],
+    Commercial: [
+      { label: "Rent", href: "/commercial/rent" },
+      { label: "Sale", href: "/commercial/sale" },
+    ],
+    Industrial: [
+      { label: "Rent", href: "/industrial/rent" },
+      { label: "Sale", href: "/industrial/sale" },
+    ],
+    AboutUs: [
+      { label: "Blogs", href: "/about-us/blogs" },
+      {
+        label: "Real Estate Property Consultant",
+        href: "/about-us/consultant",
+      },
+    ],
   };
 
   const menuOrder = [
-    { label: "Home", href: "#" },
-    { label: "Listing", href: "#" },
+    { label: "Home", href: "/" },
+    { label: "Listing", href: "/listing" },
     { label: "Residential", dropdown: dropdownItems.Residential },
     { label: "Commercial", dropdown: dropdownItems.Commercial },
     { label: "Industrial", dropdown: dropdownItems.Industrial },
-    { label: "Pre-leased", href: "#" },
-    { label: "Distress Sale", href: "#" },
-    { label: "Goa", href: "#" },
+    { label: "Pre-leased", href: "/pre-leased" },
+    { label: "Distress Sale", href: "/distress-sale" },
+    { label: "Goa", href: "/goa" },
     { label: "About Us", dropdown: dropdownItems.AboutUs },
   ];
+
+  const linkStyles = {
+    marginLeft : "20px",  
+    fontSize: "18px",  
+    _hover: { color: "#0096cb" }, 
+    color: "white",  
+    _focus: { boxShadow: "none" },  
+  };
 
   return (
     <Box
@@ -61,21 +84,26 @@ const Header = () => {
       bg="#004274"
       boxShadow="sm"
       h={{ base: "80px", md: "100px" }}
-      overflowX="hidden" // Prevent horizontal overflow
+      w="100%"
+      overflowX="hidden"
     >
       <Flex
         h="100%"
         align="center"
         justify="space-between"
         px={{ base: 4, md: 8 }}
-        position="relative" // Ensure Flex container doesn't have absolute positioning issues
+        w="100%"
+        wrap="wrap"
       >
         <Image
           src={logo}
           alt="logo"
           h={{ base: "80px", md: "100px" }}
           objectFit="contain"
-          mx="auto" // Center the logo on mobile
+          position={{ base: "relative", md: "absolute" }}
+          left={{ base: "50%", md: "0" }}
+          transform={{ base: "translateX(-50%)", md: "none" }}
+          w={{ base: "auto", md: "130px" }}
         />
 
         {/* Hamburger Menu */}
@@ -86,7 +114,7 @@ const Header = () => {
           display={{ base: "block", md: "none" }}
           onClick={onOpen}
           position="absolute"
-          left={{ base: "4", md: "none" }} // Ensure it stays on the left side for mobile view
+          left="4"
         />
 
         {/* Desktop Navigation */}
@@ -96,6 +124,7 @@ const Header = () => {
           ml="auto"
           align="center"
           color="white"
+          w="auto"
         >
           {menuOrder.map((menuItem, index) =>
             menuItem.dropdown ? (
@@ -112,25 +141,29 @@ const Header = () => {
                 <MenuList bg="#004274" borderColor="white">
                   {menuItem.dropdown.map((item, idx) => (
                     <React.Fragment key={idx}>
+                      <Link to={item.href}>
                       <MenuItem
+                        key={idx}
                         bg="#004274"
                         color="white"
                         _hover={{ bg: "#004274", color: "#0096cb" }}
+                        
+                         
                       >
-                        {item}
+                        {item.label}
                       </MenuItem>
+                      </Link>
+
                       {idx < menuItem.dropdown.length - 1 && <Divider />}
                     </React.Fragment>
                   ))}
                 </MenuList>
               </Menu>
             ) : (
-              <Link
+                <Link
+                to={menuItem.href}
                 key={index}
-                mx={4}
-                _hover={{ color: "#0096cb" }}
-                fontSize={"18px"}
-                href={menuItem.href}
+                style={linkStyles}
               >
                 {menuItem.label}
               </Link>
@@ -169,11 +202,11 @@ const Header = () => {
                           {menuItem.dropdown.map((item, idx) => (
                             <Link
                               key={idx}
-                              href="#"
+                              to={item.href}
                               color="gray.700"
                               _hover={{ color: "#0096cb" }}
                             >
-                              {item}
+                              {item.label}
                             </Link>
                           ))}
                         </VStack>
@@ -182,7 +215,7 @@ const Header = () => {
                   ) : (
                     <Link
                       key={index}
-                      href={menuItem.href}
+                      to={menuItem.href}
                       fontWeight="bold"
                       color="#004274"
                       _hover={{ color: "#0096cb" }}
