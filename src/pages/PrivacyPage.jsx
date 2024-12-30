@@ -1,18 +1,18 @@
 import React from 'react'
-import Footer from '../components/common/Footer'
-import Contact from '../components/Contact'
 import Header from '../components/common/Header'
+import Privacy from '../components/Privacy'
+import Footer from '../components/common/Footer'
 import SearchBox from '../components/common/SearchBox'
 
-function ContactPage() {
+function PrivacyPage() {
   return (
-    <>
+   <>
      <Header/>
      <SearchBox/>
-     <Contact/>
+     <Privacy/>
      <Footer/>
-    </>
+   </>
   )
 }
 
-export default ContactPage
+export default PrivacyPage

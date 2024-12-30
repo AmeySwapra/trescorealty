@@ -166,7 +166,7 @@ const Footer = () => {
               |{" "}
               <Link
                 to={'/terms'}
-                isExternal
+               
               >
                 Terms and Conditions
               </Link>
