@@ -21,7 +21,7 @@ function PropertyDetailPage() {
       <PropertyImage />
 
       <Grid
-        templateColumns={{ base: '1fr', md: '3fr 1fr' }} // Stack columns for small screens, side-by-side for larger screens
+        templateColumns={{ base: '1fr', md: '3fr 1fr' }} 
         gap={6}
         px={6}
         py={12}

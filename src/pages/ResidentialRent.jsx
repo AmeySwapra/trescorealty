@@ -8,10 +8,14 @@ import PropertyStatus from '../components/common/PropertyStatus';
 import PropertyType from '../components/common/PropertyType';
 import PropertyList from '../components/common/PropertyList';
 import PropertyCards from '../components/common/PropertyCards';
+import { Helmet } from 'react-helmet-async';
 
 function ResidentialRent() {
   return (
     <>
+    <Helmet>
+    <title>Residential for Rent-Trescorealty</title>
+    </Helmet>
       <Header />
       <SearchBox />
  <Heading pl={10} pt={5}>Residential Rent</Heading>

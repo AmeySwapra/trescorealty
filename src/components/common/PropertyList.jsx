@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Flex,
@@ -8,8 +8,8 @@ import {
   Button,
   SimpleGrid,
 } from "@chakra-ui/react";
-import { FaList, FaTh } from "react-icons/fa";
-import Pagination from "./Pagination"; // Ensure the Pagination component is properly imported
+import { FaHeart, FaList, FaRegHeart, FaTh } from "react-icons/fa";
+import Pagination from "./Pagination";
 
 import h1 from "../../assets/images/h1.jpeg";
 import h2 from "../../assets/images/h2.jpeg";
@@ -268,13 +268,32 @@ const properties = [
 const PropertyList = () => {
   const [isGridView, setIsGridView] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+  const [bookmarked, setBookmarked] = useState([]);
   const itemsPerPage = 9;
+
+  const toggleBookmark = (propertyId) => {
+    setBookmarked((prev) =>
+      prev.includes(propertyId)
+        ? prev.filter((id) => id !== propertyId)
+        : [...prev, propertyId]
+    );
+  };
+
+  const [randomizedProperties, setRandomizedProperties] = useState([]);
+
+  useEffect(() => {
+    const shuffledProperties = [...properties].sort(() => Math.random() - 0.5);
+    setRandomizedProperties(shuffledProperties);
+  }, []);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentProperties = properties.slice(indexOfFirstItem, indexOfLastItem);
+  const currentProperties = randomizedProperties.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
 
-  const totalPages = Math.ceil(properties.length / itemsPerPage);
+  const totalPages = Math.ceil(randomizedProperties.length / itemsPerPage);
 
   const handlePageChange = (page) => {
     if (page >= 1 && page <= totalPages) {
@@ -310,11 +329,28 @@ const PropertyList = () => {
           {currentProperties.map((property) => (
             <Box
               key={property.id}
+              position="relative"
               borderWidth="1px"
               borderRadius="md"
               overflow="hidden"
-              boxShadow="md"
+              boxShadow="lg"
             >
+              <IconButton
+                icon={
+                  bookmarked.includes(property.id) ? (
+                    <FaHeart />
+                  ) : (
+                    <FaRegHeart />
+                  )
+                }
+                position="absolute"
+                top={2}
+                right={2}
+                colorScheme={bookmarked.includes(property.id) ? "red" : "gray"}
+                aria-label="Bookmark"
+                onClick={() => toggleBookmark(property.id)}
+                zIndex={1}
+              />
               <Image src={property.image} alt={property.title} />
               <Box p={5}>
                 <Text fontSize="xl" fontWeight="bold" mb={2}>
@@ -358,17 +394,57 @@ const PropertyList = () => {
               boxShadow="md"
               p={5}
               alignItems="center"
-              direction={["column", "row"]} 
+              direction={["column", "row"]}
             >
-              <Image
-                src={property.image}
-                alt={property.title}
-                boxSize={["150px", "200px"]} 
-                objectFit="cover"
-                borderRadius="md"
-                mb={[4, 0]} 
-                mr={[0, 4]} 
+              <IconButton
+                icon={
+                  bookmarked.includes(property.id) ? (
+                    <FaHeart />
+                  ) : (
+                    <FaRegHeart />
+                  )
+                }
+                position="absolute"
+                top={2}
+                right={2}
+                colorScheme={bookmarked.includes(property.id) ? "red" : "gray"}
+                aria-label="Bookmark"
+                onClick={() => toggleBookmark(property.id)}
+                zIndex={1}
               />
+
+              {/* Image with Heart Icon */}
+              <Box position="relative">
+                <Image
+                  src={property.image}
+                  alt={property.title}
+                  boxSize={["150px", "200px"]}
+                  objectFit="cover"
+                  borderRadius="md"
+                  mb={[4, 0]}
+                  mr={[0, 4]}
+                />
+                <IconButton
+                  icon={
+                    bookmarked.includes(property.id) ? (
+                      <FaHeart />
+                    ) : (
+                      <FaRegHeart />
+                    )
+                  }
+                  position="absolute"
+                  top={2}
+                  right={4}
+                  colorScheme={
+                    bookmarked.includes(property.id) ? "red" : "gray"
+                  }
+                  aria-label="Bookmark"
+                  onClick={() => toggleBookmark(property.id)}
+                  variant="ghost"
+                />
+              </Box>
+
+              {/* Property Details */}
               <Box>
                 <Text fontSize={["lg", "xl"]} fontWeight="bold" mb={2}>
                   {property.title}

@@ -68,6 +68,7 @@ const Header = () => {
     { label: "Distress Sale", href: "/distress-sale" },
     { label: "Goa", href: "/goa" },
     { label: "About Us", dropdown: dropdownItems.AboutUs },
+    { label: "Contact Us", href:"/contact" },
   ];
 
   const linkStyles = {
